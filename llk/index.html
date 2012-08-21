@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>连连看 JavaScript</title>
+<link media="screen" href="styles/llk.css" type="text/css" rel="Stylesheet" />
+<script type="text/javascript" src="js/llk.js"></script>
+</head>
+
+<body>
+<div id="Container">
+<OBJECT id=au_sound classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" style="display:none">
+<PARAM NAME=movie VALUE="sound/sound.swf">
+</OBJECT>
+	<div id="Header" class="wapper">
+		<h2>连连看</h2>
+		<p>"q" 暂停;&nbsp;1 Start 2 reset 3 auto</p>
+	</div>
+	<div id="PageBody" class="wapper">
+		<div id="llk_start" class="llk_panel" style="display:none;">
+			<input type="button" name="btn_start" id="btn_start" value=" 开始游戏 " />
+		</div>
+		<div id="llk_main" style="display:none;">
+			<div class="llk_status clearfix">
+				<p class="level_score">
+					第 <span id="level"></span> 关&nbsp;&nbsp;得分：<span id="score"></span>
+				</p>
+				<p class="time"><img src="" id="time_count"></p>
+			</div>
+			<div id="board">
+				<div id="find_path"></div>				
+				<table border="0" cellpadding="0" cellspacing="0" class="tab_main" id="tab_main">
+				</table>
+			</div>
+		</div>
+		<div id="llk_pause" class="llk_panel" style="display:none;">
+			<input type="button" value=" 继续 " id="btnContinue" name="btnContinue" />
+		</div>
+		<div id="llk_timeout" class="llk_panel" style="display:none;">
+			共得分：<span id="timeout_score"></span>&nbsp;&nbsp;
+			<input type="button" value=" 重新开始 " id="btnRestart" name="btnRestart" />
+		</div>
+		<div id="llk_success" class="llk_panel" style="display:none;">
+			共得分：<span id="success_score"></span>&nbsp;&nbsp;
+			<input type="button" value=" 第一关 " id="btnNextLevel" name="btnNextLevel" />
+		</div>
+	</div>
+	<div id="Footer" class="wapper">
+		<p>QQ: 395693519</p>
+	</div>
+</div>
+</body>
+</html>

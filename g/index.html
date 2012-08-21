@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
+<title>袁天罡称骨算命</title>
+<script src="js/app.js"></script>
+<style>
+.wapper{text-align:center;margin-top:20px;}
+.wapper p{padding: 10px 0;}
+.wapper p input{padding:6px 20px;}
+#result{margin:10px auto;max-width:600px;text-align:left;}
+</style>
+</head>
+
+<body>
+<div class="wapper">
+	<p>
+		<select id="type">
+			<option value="a">公历生日</option>
+			<option value="b">农历生日</option>
+		</select>:<select name="year" id="year"></select>年
+		<select name="month" id="month"></select>月
+		<select name="day" id="day"></select>日
+	</p>
+	<p><select name="hour" id="hour"></select></p>
+	<p><input type="button" name="btn" id="c" value="计算" /></p>
+	<div id="result"></div>
+</div>
+</body>
+</html>

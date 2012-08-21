@@ -1,0 +1,53 @@
+/* CSS Document */
+
+*{margin:0;padding:0;}
+body{margin:0;padding:0;font-size:12px;color:#000000;text-align:center;background:#FFFFFF;}
+form,ul,ul li,p{margin:0;padding:0;}
+ul, ul li{list-style:none;}
+a{color:#0000FF;text-decoration:none;cursor:hand;}
+a:hover{color:#0000FF;text-decoration:underline;}
+a.link{color:#0000FF;text-decoration:none;}
+a.link:hover{color:#0000FF;text-decoration:underline;}
+a.wlink{color:#FF0000;text-decoration:underline;}
+a.wlink:hover{color:#FF0000;text-decoration:underline;}
+select input{font-size:12px;}
+
+img{border:0px;}
+
+input{padding-left:10px;padding-right:10px;}
+
+.clearBoth{clear:both;}
+.divclear{content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }
+* html>body .clearfix { display:inline-block; width:100%; }
+* html .clearfix { height:1%; /* End hide from IE-mac */ } 
+/* ie7 hack*/ 
+*+html .clearfix { min-height:1%; } 
+.clearfix{zoom:1;} 
+
+#Container{width:100%;text-align:center;margin:0 auto;}
+.wapper{width:960px;text-align:left;margin:0 auto;}
+
+#Header{height:100px;background:#EEEEEE;}
+	#Header h2{padding-top:28px;font-size:14px;font-weight:bold;margin-left:30px;line-height:40px;}
+	#Header p{font-size:12px;margin-left:58px;color:#333333;}
+
+#PageBody{height:600px;background:#333333;color:#FFFFFF;}
+
+#Footer{text-align:center;height:60px;color:#666666;background:#EEEEEE;}
+	#Footer p{padding:20px 0;}
+	
+.llk_panel{text-align:center;padding-top:280px;}
+#llk_main{}
+	.llk_status{padding:0 120px;}
+		.level_score{float:left;margin-left:30px;margin-top:28px;}
+			#level{color:#FF0000;}
+			#score{color:#FF0000;}
+		.time{float:right;margin-right:30px;margin-top:28px;border:1px solid #EEEEEE;width:450px;}
+			#time_count{}	
+	#board{margin:20px 0 0 110px;}
+		#find_path{position:relative;z-index:10000;}
+		.tab_main{clear:both;margin-left:0px;}
+			.tab_main td{width:46px;height:41px;text-align:center;}
+			.tab_main td img{cursor:pointer;}
+#success_score{color:#FF0000;}
