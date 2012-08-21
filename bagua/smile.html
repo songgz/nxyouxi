@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta chartset="utf-8" />
+	<title>Smile</title>
+	<style>
+	canvas{border:1px solid #CCC;}
+	</style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">你的浏览器还不支持哦</canvas>
+
+<script>
+var canvas = {
+	smile: function(){
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		ctx.beginPath();
+		ctx.arc(75,75,50,0,Math.PI*2,true); // Outer circle
+		ctx.moveTo(110,75);
+		ctx.arc(75,75,35,0,Math.PI,false);   // Mouth (clockwise)
+		ctx.moveTo(65,65);
+		ctx.arc(60,65,5,0,Math.PI*2,true);  // Left eye
+		ctx.moveTo(95,65);
+		ctx.arc(90,65,5,0,Math.PI*2,true);  // Right eye
+		ctx.stroke();
+	}
+};
+canvas.smile();
+</script>
+</body>
+</html>
+
+
+
+

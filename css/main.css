@@ -1,0 +1,45 @@
+*,html,div,p,span,h1,h2,h3,h4,h5,h6,ul,ul li{margin:0;padding:0;}
+body{margin:0;padding:0;background:#73D0F2;font-family:Microsoft Yahei, simsun;font-size:12px;}
+ul, ul li{list-style:none;}
+a{color:#006A92;text-decoration:none;}
+a:hover{color:#006A92;text-decoration:underline;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }
+* html>body .clearfix { display:inline-block; width:100%; }
+* html .clearfix { height:1%; /* End hide from IE-mac */ } 
+/* ie7 hack*/ 
+*+html .clearfix { min-height:1%; } 
+.clearfix{zoom:1;} 
+
+.wapper{margin:0;padding:0;width:100%;}
+#Container{margin:0 auto;padding:0;width:92%;}
+
+#Header{padding:20px 0 0;}
+#Header h1{padding:0 0 0 30px;height:60px;line-height:60px;font-size:24px;font-weight:bold;color:#FFF;}
+
+#PageBody{margin:0;}
+	.top_nav, .page_con{padding-left:160px;overflow:hidden;}
+	.side, .main{height:auto;margin-bottom:-32767px;padding-bottom:32767px;}
+	.side{float:left;display:inline;margin-left:-160px;width:159px;border-right:1px solid #A3E0F5;}
+	.main{float:right;width:100%;}
+	.top_nav .side{border-radius:4px 0 0 0;-webkit-border-radius:4px 0 0 0;-moz-border-radius:4px 0 0 0;background:#BAE5F3;}
+	.top_nav .main{border-radius:0 4px 0 0;-webkit-border-radius:0 4px 0 0;-moz-border-radius:0 4px 0 0;background:#FFF;}
+	.page_con .side{border-top:1px solid #ACDCEB;background:#D7F1FA;}
+	.page_con .main{border-top:1px solid #D1D1D1;background:#E9E9E9;}
+	
+	.menu{margin:20px 0 0 40px;}
+	.menuli{}
+	.menuli h5{line-height:32px;color:#006A92;font-weight:bold;}
+	.submenu{margin:0 0 0 10px;}
+	.submenu li{display:list-item;line-height:28px;}
+	.submenu li span{padding:0 6px 0 0;color:#6EA5B6;font-size:12px;}
+	
+	.selector_top{padding:8px 0 6px;height:24px;line-height:24px;text-align:center;color:#006A92;}
+	.wel{padding:8px 0 6px 28px;height:24px;line-height:24px;color:#565656;}
+	#wall{position:relative;margin:0 4px;padding:8px 0 8px 10px;}
+	.col{margin:5px 0;padding:15px 14px 15px;width:220px;color:#565656;background:#FFF;border:1px solid #D2D2D2;box-shadow:5px 3px 3px rgba(221, 221, 221, .32);-webkit-box-shadow:5px 3px 3px rgba(221, 221, 221, .32);-moz-box-shadow:5px 3px 3px rgba(221,221,221,.32);}
+	.col img{width:220px;}
+	.col a{line-height:28px;}
+	.col p{line-height:22px;}
+
+#Footer{margin:40px 0;text-align:center;}
+	.foot{color:#FFF;}

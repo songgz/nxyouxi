@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta chartset="utf-8" />
+	<title>八卦图</title>
+	<style>
+	canvas{border:1px solid #CCC;}
+	</style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300">你的浏览器还不支持哦</canvas>
+
+<script>
+var canvas = {
+	ex: function(){		
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var center = 150, radius = 50, rl = 5;
+		
+		ctx.beginPath();
+		ctx.moveTo(center, center);		
+		ctx.arc(center, center, radius, 0, Math.PI*2, true);
+		ctx.stroke();
+		
+		ctx.arc(center, center, radius, -Math.PI/2, Math.PI/2, true);
+		ctx.fillStyle = 'black';
+		ctx.fill();
+		
+		ctx.beginPath();
+		ctx.arc(center, center, radius, Math.PI/2, -Math.PI/2, true);
+		ctx.fillStyle = 'white';
+		ctx.fill();
+		
+		ctx.beginPath();
+		ctx.arc(center, center - radius/2, radius/2, -Math.PI/2, Math.PI/2, false);
+		ctx.fillStyle = 'black';
+		ctx.fill();
+		
+		ctx.beginPath();
+		ctx.arc(center, center + radius/2, radius/2, -Math.PI/2, Math.PI/2, true);
+		ctx.fillStyle = 'white';
+		ctx.fill();
+				
+		ctx.beginPath();
+		ctx.arc(center, center - radius/2, rl, 0, Math.PI*2, true);
+		ctx.fillStyle = 'white';
+		ctx.fill();
+		
+		ctx.beginPath();
+		ctx.arc(center, center + radius/2, rl, 0, Math.PI*2, true);
+		ctx.fillStyle = 'black';
+		ctx.fill();
+	}
+};
+canvas.ex();
+</script>
+</body>
+</html>
+
+
+
+

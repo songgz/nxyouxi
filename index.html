@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta chartset="utf-8" />
+	<title>Fun Wall</title>
+	<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="wapper">
+<div id="Container">	
+	<div id="Header">
+		<h1>Fun Wall</h1>
+	</div>
+	<div id="PageBody" class="clearfix">
+		<div class="top_nav">
+			<div class="side">	
+				<div class="selector_top">All</div>			
+			</div>
+			<div class="main">
+				<div class="wel" id="wel">清水出芙蓉，天然去雕饰</div>
+			</div>
+		</div>
+		<div class="page_con">
+			<div class="side">	
+				<ul class="menu">
+					<li class="menuli">
+						<h5>Categories</h5>
+						<ul class="submenu">
+							<li><span>·</span><a href="#">数学</a></li>
+							<li><span>·</span><a href="#">中医</a></li>
+							<li><span>·</span><a href="#">天文</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="main">
+				<div id="wall" style="display:none;">
+					<div class="col">
+						<a href="/g/index.html" target="_blank">袁天罡称骨算命</a>
+						<p>袁天罡称骨算命法是唐代著名的星象预测家袁天罡称骨的预测方法。 这种方法同四柱算命一样，能确定一个人一生的吉凶祸福、荣辱盛衰，准确率很高，又便于掌握和运用。</p>
+					</div>
+					<div class="col"><a href="http://baike.baidu.com/view/1816.htm">黄金分割</a></div>
+					<div class="col"><a href="bagua/index.html" target="_blank">八卦图</a></div>
+					<div class="col">
+						<a href="llk/index.html" target="_blank">连连看</a>
+						<p>网页版连连看</p>
+					</div>
+					<div class="col">
+						<a href="http://tech.nxyouxi.com/" target="_blank">To do List</a>
+						<p>keep updating</p>
+					</div>
+					<div class="col">
+						<a href="http://timeline.nx256.com/" target="_blank">Timeline</a>
+						<p>人物传记时间轴</p>
+					</div>
+					<div class="col">
+						<a href="http://timeline.nx256.com/html5" target="_blank">About HTML5 Game</a>
+						<p>关于自己的HTML5游戏</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="Footer">
+		<div class="foot">Copyright &copy; 2012 &nbsp;&nbsp; QQ: 395693519</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="js/s.js"></script>
+<script type="text/javascript">
+function loadready(){
+	var w = $(window).width();
+	if(w > 1490){
+		$('#Container').css('width', '1480px');
+	} else if(w > 1222){
+		$('#Container').css('width', '1222px');
+	} else {
+		$('#Container').css('width', '960px');
+	}
+}
+
+$('#wall').imagesLoaded(function(){
+	loadready();
+	$('#wall').show();
+	$('#wall').masonry({
+		itemSelector: '.col',
+		columnWidth: 260
+	});
+});
+
+$(window).resize(function(){
+	loadready();
+});
+</script>
+</body>
+</html>
