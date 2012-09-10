@@ -1,0 +1,48 @@
+*,html,div,p,span,h1,h2,h3,h4,h5,h6,ul,ul li{margin:0;padding:0;}
+body{margin:0;padding:0;background:#000;font-family:Microsoft Yahei, simsun;font-size:12px;}
+ul, ul li{list-style:none;}
+a{color:#006A92;text-decoration:none;}
+a:hover{color:#006A92;text-decoration:underline;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }
+* html>body .clearfix { display:inline-block; width:100%; }
+* html .clearfix { height:1%; /* End hide from IE-mac */ } 
+/* ie7 hack*/ 
+*+html .clearfix { min-height:1%; } 
+.clearfix{zoom:1;} 
+
+.wapper{margin:0;padding:50px 0;width:100%;}
+#Container{margin:0 auto;padding:0;width:100%;background:url(../images/ye.png) no-repeat center top;}
+
+.yue{position:relative;margin:0 auto;width:1024px;height:640px;}
+
+.a{position:absolute;top:114px;right:0;width:114px;height:114px;overflow:hidden;}
+.b{position:relative;width:114px;height:114px;background:url(../images/yue.png) no-repeat center center;}
+
+
+/*
+
+.c{position:absolute;z-index:10;width:114px;height:114px;background:#000;border-radius:57px;-webkit-transform:rotatey(60deg);background:url(../images/yue.png) no-repeat center center;}
+.d{position:absolute;z-index:9;width:57px;height:114px;background:#000;}
+
+
+.a{position:absolute;top:114px;right:0;width:114px;height:114px;background:url(../images/yue.png) no-repeat center center;overflow:hidden;}
+.a{-webkit-transform-style: preserve-3d; -webkit-animation-name: x-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes x-spin{
+	0%{} 
+	50%{top:0;right:455px;}
+	100%{top:114px;right:904px;} 
+}
+
+.b{margin:0 auto;display:block;width:114px;height:114px;background:#000;border-radius:0 57px 57px 0;border:1px solid red;}
+.b{-webkit-transform-style: preserve-3d; -webkit-animation-name: y-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes y-spin{
+	0%{-webkit-transform:rotatey(0deg);}
+	25%{-webkit-transform:rotatey(45deg);}
+	50%{-webkit-transform:rotatey(90deg);}
+	100%{} 
+}
+
+*/
+

@@ -1,0 +1,90 @@
+*,html,div,p,span,h1,h2,h3,h4,h5,h6,ul,ul li{margin:0;padding:0;}
+body{margin:0;padding:0;background:#73D0F2;font-family:Microsoft Yahei, simsun;font-size:12px;}
+ul, ul li{list-style:none;}
+a{color:#006A92;text-decoration:none;}
+a:hover{color:#006A92;text-decoration:underline;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }
+* html>body .clearfix { display:inline-block; width:100%; }
+* html .clearfix { height:1%; /* End hide from IE-mac */ } 
+/* ie7 hack*/ 
+*+html .clearfix { min-height:1%; } 
+.clearfix{zoom:1;} 
+
+.wapper{margin:0;padding:0;width:100%;}
+#Container{margin:0 auto;padding:0;width:92%;}
+
+#Header{padding:20px 0 0;}
+#Header h1{padding:0 0 0 30px;height:60px;line-height:60px;font-size:24px;font-weight:bold;color:#FFF;}
+
+#PageBody{margin:0;padding:50px 0;background:#FFF;}
+
+#Footer{margin:40px 0;text-align:center;}
+	.foot{color:#FFF;}
+
+
+.dun{position:relative;display:block;margin:0 auto;width:400px;height:400px;text-align:center;}
+
+.dun .l{position:absolute;z-index:10;}
+.dun .l-con{position:relative;}
+.dun .l0{position:absolute;left:200px;display:block;width:0;height:400px;font-size:0;line-height:0;border-left:1px solid #CCC;}
+.dun .l1{-webkit-transform:rotate(22.5deg);}
+.dun .l2{-webkit-transform:rotate(67.5deg);}
+.dun .l3{-webkit-transform:rotate(112.5deg);}
+.dun .l4{-webkit-transform:rotate(157.5deg);}
+
+.dun .a{position:absolute;z-index:9;}
+.dun .a-con{position:relative;width:400px;height:400px;border:1px solid #CCC;border-radius:200px;}
+.dun .a0{position:absolute;left:190px;display:block;width:20px;height:400px;}
+.dun .a1{-webkit-transform:rotate(0deg);}
+.dun .a2{-webkit-transform:rotate(45deg);}
+.dun .a3{-webkit-transform:rotate(90deg);}
+.dun .a4{-webkit-transform:rotate(135deg);}
+.dun .a5{-webkit-transform:rotate(180deg);}
+.dun .a6{-webkit-transform:rotate(225deg);}
+.dun .a7{-webkit-transform:rotate(270deg);}
+.dun .a8{-webkit-transform:rotate(315deg);}
+
+.dun .b{position:absolute;left:50px;top:50px;z-index:9;}
+.dun .b-con{position:relative;width:300px;height:300px;border:1px solid #CCC;border-radius:150px;background:#EFEFEF;}
+.dun .b0{position:absolute;left:140px;display:block;width:20px;height:300px;}
+.dun .b1{-webkit-transform:rotate(0deg);}
+.dun .b2{-webkit-transform:rotate(45deg);}
+.dun .b3{-webkit-transform:rotate(90deg);}
+.dun .b4{-webkit-transform:rotate(135deg);}
+.dun .b5{-webkit-transform:rotate(180deg);}
+.dun .b6{-webkit-transform:rotate(225deg);}
+.dun .b7{-webkit-transform:rotate(270deg);}
+.dun .b8{-webkit-transform:rotate(315deg);}
+
+.dun .c{position:absolute;left:100px;top:100px;z-index:9;}
+.dun .c-con{position:relative;width:200px;height:200px;border:1px solid #CCC;border-radius:100px;background:#EEE;}
+.dun .c0{position:absolute;left:90px;display:block;width:20px;height:200px;}
+.dun .c1{-webkit-transform:rotate(0deg);}
+.dun .c2{-webkit-transform:rotate(45deg);}
+.dun .c3{-webkit-transform:rotate(90deg);}
+.dun .c4{-webkit-transform:rotate(135deg);}
+.dun .c5{-webkit-transform:rotate(180deg);}
+.dun .c6{-webkit-transform:rotate(225deg);}
+.dun .c7{-webkit-transform:rotate(270deg);}
+.dun .c8{-webkit-transform:rotate(315deg);}
+
+.dun .d{position:absolute;left:150px;top:150px;z-index:9;}
+.dun .d-con{position:relative;width:100px;height:100px;border:1px solid #CCC;border-radius:50px;background:#DDD;}
+.dun .d0{position:absolute;left:40px;display:block;width:20px;height:100px;}
+.dun .d1{-webkit-transform:rotate(0deg);}
+.dun .d2{-webkit-transform:rotate(45deg);}
+.dun .d3{-webkit-transform:rotate(90deg);}
+.dun .d4{-webkit-transform:rotate(135deg);}
+.dun .d5{-webkit-transform:rotate(180deg);}
+.dun .d6{-webkit-transform:rotate(225deg);}
+.dun .d7{-webkit-transform:rotate(270deg);}
+.dun .d8{-webkit-transform:rotate(315deg);}
+
+
+.dun{-webkit-transform-style: preserve-3d; -webkit-animation-name: x-spin1;-webkit-animation-duration: 7s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes x-spin{ 
+	0%{-webkit-transform: rotate(0deg);} 
+	50%{-webkit-transform: rotate(180deg);}
+	100%{-webkit-transform: rotate(360deg);} 
+}

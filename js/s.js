@@ -35,3 +35,27 @@ var s = {
 $(document).ready(function(){
 	s.i();
 });
+
+function loadready(){
+	var w = $(window).width();
+	if(w > 1490){
+		$('#Container').css('width', '1480px');
+	} else if(w > 1222){
+		$('#Container').css('width', '1222px');
+	} else {
+		$('#Container').css('width', '960px');
+	}
+}
+
+$('#wall').imagesLoaded(function(){
+	loadready();
+	$('#wall').show();
+	$('#wall').masonry({
+		itemSelector: '.col',
+		columnWidth: 260
+	});
+});
+
+$(window).resize(function(){
+	loadready();
+});
