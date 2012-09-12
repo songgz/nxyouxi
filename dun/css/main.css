@@ -21,6 +21,9 @@ a:hover{color:#006A92;text-decoration:underline;}
 #Footer{margin:40px 0;text-align:center;}
 	.foot{color:#FFF;}
 
+#PageBody ul{margin:0 auto;width:1000px;}
+#PageBody ul li{float:left;display:inline;width:500px;text-align:center;}
+p.title{padding:30px 0 0;line-height:30px;}
 
 .dun{position:relative;display:block;margin:0 auto;width:400px;height:400px;text-align:center;}
 
