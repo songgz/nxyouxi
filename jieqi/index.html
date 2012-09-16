@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>二十四节气</title>
+	<style>
+		body{margin:0;padding:0;}
+		a{color:#2B99E6;text-decoration:none;}
+		a:hover{color:#5DB0E6;}
+		h3{padding-top:20px;}
+		#wapper{background:#202020;font-size:14px;}
+		#Container{margin:0 auto;padding:60px 0;width:1000px;background:#FFF;text-align:left;}
+	</style>
+</head>
+<body>
+<div id="wapper">
+	<div id="Container">
+		<input type="text" name="year" id="year" value="2012" />
+		<input type="submit" name="submit" id="submit" value="确定" />
+		<div id="result">
+			<div id="re_year"></div>
+			<div id="re_con"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="js/tools.js"></script>
+<script type="text/javascript" src="js/eph0.js"></script>
+<script type="text/javascript" src="js/ephB.js"></script>
+<script type="text/javascript" src="js/JW.js"></script>
+<script type="text/javascript" src="js/lunar.js"></script>
+<script type="text/javascript" src="js/vml.js"></script>
+<script type="text/javascript" src="js/help.js"></script>
+<script type="text/javascript" src="js/page_gj.js"></script>
+<script>
+$(document).ready(function(){
+	$('#submit').click(function(){
+		jieqi.get();
+	});
+})
+var jieqi = {
+	get: function(){
+		this.year = parseInt($('#year').val(), 10);
+		this.getNianLi();
+	},
+	getNianLi: function(){ //dy起始年份偏移数
+		var y = this.year2Ayear(this.year);
+		if( y == -10000 ){
+			return;         //检查输入值
+		}                     
+		$('#re_year').html(this.Ayear2year(y)); //加上偏移年数
+		if( y < -10000 ) { 
+			alert('到底了'); 
+			return; 
+		} //检查输入值
+		$('#re_con').html(this.nianLiHTML(y));
+		// if(Cp2_tg.checked){
+			// Cal7.innerHTML = Ayear2year(y)+'年<br>'+;
+		// } else {
+			// Cal7.innerHTML = Ayear2year(y)+'年<br>'+nianLi2HTML(y);
+		// }
+	},
+	year2Ayear: function(c){ //传入普通纪年或天文纪年，传回天文纪年
+		var y = String(c).replace(/[^0-9Bb\*-]/g, '');
+		var q = y.substr(0,1);
+		if( q == 'B' || q == 'b' || q == '*' ){ //通用纪年法(公元前)
+			y = 1 - y.substr(1, y.length);
+			if( y > 0 ){
+				alert('通用纪法的公元前纪法从B.C.1年开始。并且没有公元0年'); 
+				return -10000;
+			}
+		} else {
+			y -= 0;
+		}
+		if( y < -4712 ){
+			alert('超过B.C. 4713不准'); 
+		}
+		if( y > 9999 ){
+			alert('超过9999年的农历计算很不准。');
+		}
+		return y;
+	},
+	Ayear2year: function(y){ //传入天文纪年，传回显示用的常规纪年
+		y -= 0;
+		if( y <= 0 ){
+			return 'B' + ( -y + 1 );
+		}
+		return '' + y;
+	},
+	nianLiHTML: function(y){ //html年历生成
+		var i, j, s = '', s1, s2, v, qi;
+		SSQ.calcY( int2((y-2000)*365.2422+180) );
+		for( i = 0; i < 14; i ++ ){
+		if( SSQ.HS[ i + 1 ] > SSQ.ZQ[24] ){
+			break; //已包含下一年的冬至
+		}
+		if(SSQ.leap && i==SSQ.leap){
+			s1 = '闰'; 
+		} else {
+			s1 = '·';
+		}
+		s1 += SSQ.ym[i]; if(s1.length<3) s1 += '月';
+		s1 += SSQ.dx[i]>29?'大':'小';
+		s1 += ' '+JD.JD2str(SSQ.HS[i]+J2000).substr(6,5);
+		
+		v = obb.so_accurate2(SSQ.HS[i]);
+		s2 = '('+ JD.JD2str(v+J2000).substr(9,11)+')';
+		if(int2(v+0.5)!=SSQ.HS[i]) s2 = '<font color=red>'+s2+'</font>';
+		//v=(v+0.5+J2000)%1; if(v>0.5) v=1-v; if(v<8/1440) s2 = '<u>'+s2+'</u>'; //对靠近0点的加注
+		s1 += s2;
+		
+		for(j=-2;j<24;j++){
+		if(j>=0)  qi=SSQ.ZQ[j];
+		if(j==-1) qi=SSQ.ZQ.pe1;
+		if(j==-2) qi=SSQ.ZQ.pe2;
+		
+		if(qi<SSQ.HS[i] || qi>=SSQ.HS[i+1]) continue;
+		s1 += ' '+obb.jqmc[(j+24)%24]+JD.JD2str(qi+J2000).substr(6,5);
+		
+		v = obb.qi_accurate2(qi);
+		s2 = '('+ JD.JD2str(v+J2000).substr(9,11)+')';
+		if(int2(v+0.5)!=qi) s2 = '<font color=red>'+s2+'</font>';
+		//v=(v+0.5+J2000)%1; if(v>0.5) v=1-v; if(v<8/1440) s2 = '<u>'+s2+'</u>'; //对靠近0点的加注
+		s1 += s2;
+		}
+		s += s1 + '<br>';
+		}
+		return s;
+	}
+};
+</script>
+</body>
+</html>
