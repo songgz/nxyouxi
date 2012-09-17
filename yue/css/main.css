@@ -13,11 +13,47 @@ a:hover{color:#006A92;text-decoration:underline;}
 .wapper{margin:0;padding:50px 0;width:100%;}
 #Container{margin:0 auto;padding:0;width:100%;background:url(../images/ye.png) no-repeat center top;}
 
-.yue{position:relative;margin:0 auto;width:1024px;height:640px;}
+.yue{margin:0 auto;width:1024px;height:640px;}
 
-.a{position:absolute;top:114px;right:0;width:114px;height:114px;overflow:hidden;}
-.b{position:relative;width:114px;height:114px;background:url(../images/yue.png) no-repeat center center;}
+.a{position:relative;top:114px;left:910px;width:114px;height:134px;background:url(../images/yue.png) no-repeat center top;overflow:hidden;}
+.b{position:absolute;left:0px;width:114px;height:114px;background:#000;}
+.c{position:absolute;left:114px;width:114px;height:114px;background:#000;}
+.d{position:absolute;bottom:0;width:114px;height:20px;overflow:hidden;}
+.e{position:relative;}
+.f{position:absolute;top:0;width:114px;text-align:center;color:#FFF;}
+.f p{line-height:20px;}
 
+.a{-webkit-transform-style: preserve-3d; -webkit-animation-name: x-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes x-spin{
+	0%{left:910px;} 
+	50%{top:0;left:455px;}
+	100%{top:114px;left:0px;} 
+}
+
+.b{-webkit-transform-style: preserve-3d; -webkit-animation-name: y-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes y-spin{
+	0%{left:0;}
+	50%{left:-114px;}
+	100%{left:-114px;} 
+}
+
+.c{-webkit-transform-style: preserve-3d; -webkit-animation-name: z-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+
+@-webkit-keyframes z-spin{
+	0%{left:114px;}
+	50%{left:114px;}
+	100%{left:0;} 
+}
+
+.f{-webkit-transform-style: preserve-3d; -webkit-animation-name: f-spin;-webkit-animation-duration: 30s;-webkit-animation-iteration-count: infinite;-webkit-animation-timing-function: linear;}
+@-webkit-keyframes f-spin{
+	0%{top:0px;}
+	1%{top:-20px;}
+	50%{top:-300px;}
+	100%{top:-600px;} 
+}
 
 /*
 
