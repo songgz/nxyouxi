@@ -1,0 +1,43 @@
+*,html,div,p,span,h1,h2,h3,h4,h5,h6,ul,ul li{margin:0;padding:0;}
+body{margin:0;padding:0;background:#73D0F2;font-family:Microsoft Yahei, simsun;font-size:12px;}
+ul, ul li{list-style:none;}
+a{color:#006A92;text-decoration:none;}
+a:hover{color:#006A92;text-decoration:underline;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; }
+* html>body .clearfix { display:inline-block; width:100%; }
+* html .clearfix { height:1%; /* End hide from IE-mac */ } 
+/* ie7 hack*/ 
+*+html .clearfix { min-height:1%; } 
+.clearfix{zoom:1;} 
+
+.wapper{margin:0;padding:0;width:100%;}
+#Container{margin:0 auto;padding:0;width:92%;}
+
+#Header{padding:20px 0 0;}
+#Header h1{padding:0 0 0 30px;height:60px;line-height:60px;font-size:24px;font-weight:bold;color:#FFF;}
+
+#PageBody{margin:0;padding:50px 0;background:#FFF;}
+
+#Footer{margin:40px 0;text-align:center;}
+	.foot{color:#FFF;}
+
+#PageBody ul{margin:0 auto;width:1000px;}
+#PageBody ul li{float:left;display:inline;width:500px;text-align:center;}
+p.title{padding:30px 0 0;line-height:30px;}
+
+.main-form{margin:0 auto;padding:20px;width:900px;border:1px solid #CCC;}
+.main-form p{margin:20px 0;}
+.opts-jw select{margin-right:10px;}
+.opts-jw span{color:#FF0000;}
+.opts-jw span b{margin:0 10px;color:#565656;}
+.main-form input{margin:0 10px 0 4px;padding:2px 4px;}
+.iptJ{width:90px;}
+.iptYear{width:50px;}
+.iptMonth{width:30px;}
+.iptDay{width:30px;}
+.iptMin{width:60px;}
+.btn{padding:2px 20px !important;line-height:18px;border:1px solid #CCC;background:#DDD;cursor: pointer;}
+
+#Cal6{line-height:28px;}
+#Cal6 b{margin-right:10px;}
+#Cal6 i{font-style:normal;}

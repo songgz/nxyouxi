@@ -1,54 +1,80 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>二十四节气</title>
-	<style>
-		body{margin:0;padding:0;font-size:14px;}
-		a{color:#2B99E6;text-decoration:none;}
-		a:hover{color:#5DB0E6;}
-		h3{padding-top:20px;}
-		#wapper{}
-		#Container{margin:0 auto;padding:60px 0;width:1000px;background:#FFF;text-align:left;}
-		.date-form input{margin:0 10px 0 0;padding:2px 4px;border:1px solid #CCC;text-align:center;}
-		.date-form .submit{padding:4px 20px;line-height:20px;background:#DDD;}
+var curJD; //现在日期
+var curTZ; //当前时区
+
+var bazi = {
+	init: function(){
+		var arr = [];
+		for(var i = 0, l = JWv.length; i < l; i++){
+			arr.push('<option value="' + i + '">' + JWv[i][0] + '</option>');
+		}
+		$('#Sel1').empty().html(arr.join(''));
 		
-		#result{margin:30px 0 0;}
-		#re_year{margin:10px 0;}
-		#re_con{line-height:28px;}
-	</style>
-</head>
-<body>
-<div id="wapper">
-	<div id="Container">
-		<div class="date-form">
-			<input type="text" name="year" id="year" value="" style="width:60px;" />年
-			<input type="submit" name="submit" id="submit" class="submit" value="确定" />
-		</div>
-		<div id="result">
-			<div id="re_year"></div>
-			<div id="re_con"></div>
-		</div>
-	</div>
-</div>
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="js/tools.js"></script>
-<script type="text/javascript" src="js/eph0.js"></script>
-<script type="text/javascript" src="js/ephB.js"></script>
-<script type="text/javascript" src="js/JW.js"></script>
-<script type="text/javascript" src="js/lunar.js"></script>
-<script type="text/javascript" src="js/vml.js"></script>
-<script type="text/javascript" src="js/help.js"></script>
-<script type="text/javascript" src="js/page_gj.js"></script>
-<script>
-$(document).ready(function(){
-	var date = new Date();
-	$('#year').val(date.getFullYear());
-	$('#submit').click(function(){
-		jieqi.get();
-	});
-})
-var jieqi = {
+		var self = this;
+		$('#Sel1').change(function(){
+			Sel2.length = 0;
+			var i, ob = JWv[Sel1.options[Sel1.selectedIndex].value - 0];
+			for( i = 1; i < ob.length; i++)
+				addOp(Sel2, ob[i].substr(0, 4), ob[i].substr(4, ob[i].length - 4));
+			$('#Sel2').trigger('change');
+		});
+		
+		$('#Sel2').change(function(){
+			var v = new JWdecode(Sel2.options[Sel2.selectedIndex].value);
+			Sel2.vJ = v.J;
+			Sel2.vW = v.W;
+			$('#Cp11_J').val((v.J / Math.PI * 180).toFixed(6));
+			Cal_zdzb.innerHTML = '<b>经</b>' + rad2str2(v.J) + '<b>纬</b>' + rad2str2(v.W);
+			setCookie('Sel1', Sel1.selectedIndex);
+			setCookie('Sel2', Sel2.selectedIndex);
+		});
+		
+		$('#Sel1').trigger('change');
+
+		this.ML_settime();
+		
+		$('#ML_settime').click(function(){
+			self.ML_settime();
+		});
+		$('#ML_calc').click(function(){
+			self.ML_calc();
+		});
+	},
+	ML_calc: function(){
+		var ob = new Object();
+		var t = timeStr2hour(Cml_his.value);
+		var jd = JD.JD(year2Ayear(Cml_y.value), Cml_m.value - 0, Cml_d.value - 0 + t / 24);
+
+		obb.mingLiBaZi(jd + curTZ / 24 - J2000, Cp11_J.value / radd, ob);
+		//八字计算
+		var arr = [];
+		arr.push('<font color=red>  <b>[日标]：</b></font>' + '公历 ' + Cml_y.value + '-' + Cml_m.value + '-' + Cml_d.value + ' 儒略日数 ' + int2(jd + 0.5) + ' 距2000年首' + int2(jd + 0.5 - J2000) + '日');
+		arr.push('<font color=red  ><b>[八字]：</b></font>' + ob.bz_jn + '年 ' + ob.bz_jy + '月 ' + ob.bz_jr + '日 ' + ob.bz_js + '时 真太阳 <font color=red>' + ob.bz_zty + '</font>');
+		arr.push('<font color=green><b>[纪时]：</b></font><i>' + ob.bz_JS + '</i>');
+		arr.push('<font color=green><b>[时标]：</b></font><i>' + '23　 01　 03　 05　 07　 09　 11　 13　 15　 17　 19　 21　 23');
+		$('#Cal6').html(arr.join('<br />'));
+	},
+	
+	set_date_screen: function(){
+		var now = new Date();
+		curTZ = now.getTimezoneOffset() / 60;
+		//时区 -8为北京时
+		curJD = now / 86400000 - 10957.5 - curTZ / 24;
+		//J2000起算的儒略日数(当前本地时间)
+		JD.setFromJD(curJD + J2000);
+
+		$('#Cml_y').val(JD.Y);
+		$('#Cml_m').val(JD.M);
+		$('#Cml_d').val(JD.D);
+		$('#Cml_his').val(JD.h + ':' + JD.m + ':' + JD.s.toFixed(0));
+		
+		curJD = int2(curJD + 0.5);
+	},
+
+	ML_settime: function(){
+		this.set_date_screen(); 
+		this.ML_calc();
+	},
+
 	get: function(){
 		this.year = parseInt($('#year').val(), 10);
 		this.getNianLi();
@@ -143,6 +169,7 @@ var jieqi = {
 		return s;
 	}
 };
-</script>
-</body>
-</html>
+
+$(document).ready(function(){
+	bazi.init();
+});

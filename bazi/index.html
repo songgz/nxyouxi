@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>八字</title>
+	<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<div class="wapper">
+<div id="Container">	
+	<div id="Header">
+		<h1>八字</h1>
+	</div>
+	<div id="PageBody" class="clearfix">
+
+		<div class="main-form">
+			<p class="opts-jw">
+				<select id="Sel1" style="width:80px"></select>
+				<select id="Sel2"></select>
+				<span id="Cal_zdzb"></span>
+			</p>
+			<p>
+				经度 <input id="Cp11_J" type="text" class="iptJ"> 公元
+				<input type="text" id="Cml_y" class="iptYear">年
+				<input type="text" id="Cml_m" class="iptMonth">月
+				<input type="text" id="Cml_d" class="iptDay">日
+				<input type="text" id="Cml_his" class="iptMin">
+				<input type="button" id="ML_calc" value="确定" class="btn" onclick="ML_calc()">
+				<input type="button" id="ML_settime" value="此刻" class="btn" onclick="ML_settime()">
+			</p>
+			<div id="Cal6"></div>
+		</div>
+		
+	</div>
+	<div id="Footer">
+		<div class="foot">Copyright &copy; 2012 &nbsp;&nbsp; QQ: 395693519</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../jieqi/js/tools.js"></script>
+<script type="text/javascript" src="../jieqi/js/eph0.js"></script>
+<script type="text/javascript" src="../jieqi/js/ephB.js"></script>
+<script type="text/javascript" src="../jieqi/js/JW.js"></script>
+<script type="text/javascript" src="../jieqi/js/lunar.js"></script>
+<script type="text/javascript" src="../jieqi/js/vml.js"></script>
+<script type="text/javascript" src="../jieqi/js/help.js"></script>
+<script type="text/javascript" src="../jieqi/js/page_gj.js"></script>
+<script type="text/javascript" src="js/bazi.js"></script>
+</body>
+</html>
