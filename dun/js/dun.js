@@ -106,9 +106,9 @@ var dun = {
 		
 		var last_qiTitle, last_qiTime;
 		for(var i = 0, l = this.jieqi.length; i < l; i ++){
-			last_qiTitle = this.jieqi[i]['qi_title'], last_qiTime = this.jieqi[i]['qi_time'];
+			last_qiTitle = this.jieqi[i]['qi_title'], last_qiTime = this.jieqi[i]['qi_time'].trim();
 			var d = d1 = d2 = [];
-			d = last_qiTime.split('');
+			d = last_qiTime.split(' ');
 			d1 = d[0].split('-');
 			d2 = d[1].split(':');
 			d = new Date();
