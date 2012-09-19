@@ -1,6 +1,15 @@
 var curJD; //现在日期
 var curTZ; //当前时区
 
+Date.prototype.to_s = function(){
+	var month, day;
+	month = this.getMonth() + 1;
+	day = this.getDate();
+	month = month < 10 ? '0' + month : month;
+	day = day < 10 ? '0' + day : day;
+	return this.getFullYear() + '-' + month + '-' + day + ' ' + this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds(); 
+};
+
 var dun = {
 	init: function(){
 		this.jieqi = [];
@@ -104,11 +113,11 @@ var dun = {
 		$('#re').show();
 		$('#jieqi').html(this.nianLiHTML(this.year2Ayear(parseInt(Cml_y.value, 10))));
 		
-		var last_qiTitle, last_qiTime;
+		var from_qiTitle, from_qiTime, to_qiTitle, to_qiTime;
 		for(var i = 0, l = this.jieqi.length; i < l; i ++){
-			last_qiTitle = this.jieqi[i]['qi_title'], last_qiTime = this.jieqi[i]['qi_time'].trim();
+			to_qiTitle = this.jieqi[i]['qi_title'], to_qiTime = this.jieqi[i]['qi_time'].trim();
 			var d = d1 = d2 = [];
-			d = last_qiTime.split(' ');
+			d = to_qiTime.split(' ');
 			d1 = d[0].split('-');
 			d2 = d[1].split(':');
 			d = new Date();
@@ -118,19 +127,58 @@ var dun = {
 			d.setHours(d2[0]);
 			d.setMinutes(d2[1]);
 			d.setSeconds(d2[2]);
-			console.log(d);
 			if(d > time_s){
-				last_qiTitle = this.jieqi[i - 1]['qi_title'], last_qiTime = this.jieqi[i - 1]['qi_time'];
+				from_qiTitle = this.jieqi[i - 1]['qi_title'], from_qiTime = this.jieqi[i - 1]['qi_time'];
 				break;
 			}
 		}
 		
 		var select_info = ['<p>Info:</p>'];
 		select_info.push('<p>' + this.data['bz_jn'] + ' ' + this.data['bz_jy'] + ' ' + this.data['bz_jr'] + ' ' + this.data['bz_js'] + '</p>');
-		select_info.push('<p>' + this.data['time_s'] + '</p>');
-		select_info.push('<p>' + last_qiTitle + ' : ' + last_qiTime + '</p>');
+		select_info.push('<p>' + from_qiTitle + ' : ' + from_qiTime + '</p>');
+		select_info.push('<p>' + this.data['time_s'].to_s() + '</p>');
+		select_info.push('<p>' + to_qiTitle + ' : ' + to_qiTime + '</p>');
+		select_info.push('<p>' + this.xunshou(this.data['bz_jr']) + '</p>');
 		
 		$('#select-info').html(select_info.join(''));
+	},
+	
+	xunshou: function(gz){
+		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
+			Zhi = new Array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
+		var arr = gz.split(''), i, j, l;
+		for(i = 0, l = Gan.length; i < l; i ++){
+			if( Gan[i] == arr[0] ){
+				break;
+			}
+		}
+		for(j = 0, l = Zhi.length; j < l; j ++){
+			if( Zhi[j] == arr[1] ){
+				break;
+			}
+		}
+		
+		var xs = Gan[0] + Zhi[(j - i < 0 ? j + 12 - i : j - i)];
+		return xs;
+	},
+	
+	yuan: function(gz){		
+		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
+			Zhi = new Array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
+		var arr = gz.split(''), i, j, l;
+		for(i = 0, l = Gan.length; i < l; i ++){
+			if( Gan[i] == arr[0] ){
+				break;
+			}
+		}
+		for(j = 0, l = Zhi.length; j < l; j ++){
+			if( Zhi[j] == arr[1] ){
+				break;
+			}
+		}
+		
+		var xs = Gan[0] + Zhi[j + 12 - i];
+		return xs;
 	},
 	
 	set_date_screen: function(){
