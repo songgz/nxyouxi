@@ -75,18 +75,18 @@ var dun = {
 		arr.push('<font color=green><b>[时标]：</b></font><span>23　 01　 03　 05　 07　 09　 11　 13　 15　 17　 19　 21　 23</span>');
 		$('#Cal6').html(arr.join('<br />'));
 		
-		this.data['bz_jn'] = ob.bz_jn;
-		this.data['bz_jy'] = ob.bz_jy;
-		this.data['bz_jr'] = ob.bz_jr;
+		this.data['bz_jn'] = ob.bz_jn;  // 年干支
+		this.data['bz_jy'] = ob.bz_jy;	// 月
+		this.data['bz_jr'] = ob.bz_jr;	// 日
 		
 		var self = this;
 		$('#dun-shi i').unbind().click(function(){
 			var index = $(this).index(), js = tarr[index];
-			self.ju(js, tarr[0], ob.bz_js, index);
+			self.c_ju(js, tarr[0], ob.bz_js, index);
 		});
 	},
 	
-	ju: function(js, zi_gz, bz_js, index){
+	c_ju: function(js, zi_gz, bz_js, index){
 		var time_s = new Date();
 		time_s.setYear(Cml_y.value);
 		time_s.setMonth(parseInt(Cml_m.value, 10) - 1);
@@ -106,14 +106,15 @@ var dun = {
 			time_s.setSeconds(aaaa[2]);
 		}
 		
-		this.data['time_s'] = time_s;
-		this.data['bz_js'] = js;
-		this.data['zi_gz'] = zi_gz;
+		this.data['time_s'] = time_s;	// 北京时间
+		this.data['bz_js'] = js;	// 时干支
+		this.data['zi_gz'] = zi_gz;		// 子时干支
 		
 		$('#re').show();
 		$('#jieqi').html(this.nianLiHTML(this.year2Ayear(parseInt(Cml_y.value, 10))));
 		
 		var from_qiTitle, from_qiTime, to_qiTitle, to_qiTime;
+		this.yy = 'b'; // 阴阳 阴
 		for(var i = 0, l = this.jieqi.length; i < l; i ++){
 			to_qiTitle = this.jieqi[i]['qi_title'], to_qiTime = this.jieqi[i]['qi_time'].trim();
 			var d = d1 = d2 = [];
@@ -127,23 +128,140 @@ var dun = {
 			d.setHours(d2[0]);
 			d.setMinutes(d2[1]);
 			d.setSeconds(d2[2]);
+			if(to_qiTitle == '小寒'){
+				this.yy = 'a';
+			}
+			if(to_qiTitle == '小暑'){
+				this.yy = 'b';
+			}
 			if(d > time_s){
 				from_qiTitle = this.jieqi[i - 1]['qi_title'], from_qiTime = this.jieqi[i - 1]['qi_time'];
 				break;
 			}
 		}
 		
+		var ju = {
+			'冬至': [1, 7, 4],
+			'小寒': [2, 8, 5], 
+			'大寒': [3, 9, 6], 
+			'立春': [8, 5, 2], 
+			'雨水': [9, 6, 3], 
+			'惊蛰': [1, 7, 4], 
+			'春分': [3, 9, 6], 
+			'清明': [4, 1, 7], 
+			'谷雨': [5, 2, 8], 
+			'立夏': [4, 1, 7], 
+			'小满': [5, 2, 8], 
+			'芒种': [6, 3, 9], 
+			'夏至': [9, 3, 6], 
+			'小暑': [8, 2, 5], 
+			'大暑': [7, 1, 4], 
+			'立秋': [2, 5, 8], 
+			'处暑': [1, 4, 7], 
+			'白露': [9, 3, 6], 
+			'秋分': [7, 1, 4], 
+			'寒露': [6, 9, 3], 
+			'霜降': [5, 8, 2], 
+			'立冬': [6, 9, 3], 
+			'小雪': [5, 8, 2], 
+			'大雪': [4, 7, 1]
+		};
+		
 		var select_info = ['<p>Info:</p>'];
 		select_info.push('<p>' + this.data['bz_jn'] + ' ' + this.data['bz_jy'] + ' ' + this.data['bz_jr'] + ' ' + this.data['bz_js'] + '</p>');
 		select_info.push('<p>' + from_qiTitle + ' : ' + from_qiTime + '</p>');
 		select_info.push('<p>' + this.data['time_s'].to_s() + '</p>');
 		select_info.push('<p>' + to_qiTitle + ' : ' + to_qiTime + '</p>');
-		select_info.push('<p>' + this.xunshou(this.data['bz_jr']) + '</p>');
+		var yuan = this.c_yuan(this.data['bz_jr']);
+		this.ju = this.yy + ju[from_qiTitle][yuan];
+		select_info.push('<p>' + this.ju + '</p>');
+		select_info.push('<p>' + this.futou + '</p>');
 		
 		$('#select-info').html(select_info.join(''));
+		
+		this.dipan();
 	},
 	
-	xunshou: function(gz){
+	dipan: function(){
+		var arr = this.ju.split('');
+		var sn = arr[0]; // 顺逆
+		
+		var yiqi = ["戊", "己", "庚", "辛", "壬", "癸", "丁", "丙", "乙"];  // 六仪三奇
+		var j = parseInt(arr[1], 10);
+		
+		for(var i = 1; i <= 9; i ++){
+			$('#db' + i).html(i);
+		}
+		this.dipan_data = [];
+		if(sn == 'a'){
+			for(var i = 0; i < 9; i ++){
+				$('#db' + j).append('<br />' + yiqi[i]);
+				this.dipan_data[j-1] = yiqi[i];
+				j ++;
+				if(j >= 10){
+					j = 1;					
+				}
+			}
+		} else {
+			for(var i = 0; i < 9; i ++){
+				$('#db' + j).append('<br />' + yiqi[i]);
+				this.dipan_data[j-1] = yiqi[i];
+				j --;
+				if(j <= 0){
+					j = 9;
+				}
+			}			
+		}
+		console.log(this.dipan_data);
+		
+		this.tianpan();
+	},
+	
+	tianpan: function(){
+		var jiuxing = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
+		var liujia = ['甲子', '甲戌', '甲申', '甲午', '甲辰', '甲寅'];
+		var liuyi = ["戊", "己", "庚", "辛", "壬", "癸"];
+		var xunshou = this.c_xunshou(this.data['bz_js']);
+		console.log(this.data['bz_js']);
+		console.log(xunshou);
+		
+		var i, j;
+		for(i = 0; i < 6; i ++){
+			if(xunshou == liujia[i]){
+				break;
+			}
+		}
+		console.log(liuyi[i]);
+		for(j = 0; j < 9; j ++){
+			if(this.dipan_data[j] == liuyi[i]){
+				break;
+			}
+		}
+		zhifu = jiuxing[j];
+		console.log(zhifu);
+		
+		var shi = this.data['bz_js'].split('')[0];
+		for(var m = 0; m < 9; m ++){
+			if(this.dipan_data[m] == shi){
+				break;
+			}
+		}
+		m ++;
+		console.log(m);
+		for(var n = 0; n < 9; n ++){
+			$('#db' + m).append('<br />' + jiuxing[j]);
+			m ++;
+			j ++;
+			if(m > 9){
+				m = 1;
+			}
+			if(j > 8){
+				j = 0;
+			}
+		}
+	},
+	
+	c_xunshou: function(gz){
 		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
 			Zhi = new Array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
 		var arr = gz.split(''), i, j, l;
@@ -162,23 +280,42 @@ var dun = {
 		return xs;
 	},
 	
-	yuan: function(gz){		
+	c_yuan: function(gz){
 		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
 			Zhi = new Array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
-		var arr = gz.split(''), i, j, l;
-		for(i = 0, l = Gan.length; i < l; i ++){
+		var arr = gz.split(''), i, j, l, yuan;
+		for(i = 0, l = 10; i < l; i ++){
 			if( Gan[i] == arr[0] ){
 				break;
 			}
 		}
-		for(j = 0, l = Zhi.length; j < l; j ++){
+		for(j = 0, l = 12; j < l; j ++){
 			if( Zhi[j] == arr[1] ){
 				break;
 			}
 		}
+		var yuantou;
+		if(i > 5){
+			i = i - 5;
+			yuantou = Zhi[(j - i < 0 ? j + 12 - i : j - i)];
+			this.futou = '己' + yuantou;
+		} else {
+			yuantou = Zhi[(j - i < 0 ? j + 12 - i : j - i)];
+			this.futou = '甲' + yuantou;
+		}
 		
-		var xs = Gan[0] + Zhi[j + 12 - i];
-		return xs;
+		// console.log(futou);		
+		
+		if('子午卯酉'.indexOf(yuantou) >= 0){
+			yuan = 0;
+		}
+		if('寅申巳亥'.indexOf(yuantou) >= 0){
+			yuan = 1;
+		}
+		if('辰戌丑未'.indexOf(yuantou) >= 0){
+			yuan = 2;
+		}
+		return yuan;
 	},
 	
 	set_date_screen: function(){
