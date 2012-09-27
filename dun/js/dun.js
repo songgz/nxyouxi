@@ -175,16 +175,15 @@ var dun = {
 		var yuan = this.c_yuan(this.data['bz_jr']);
 		this.ju = this.yy + ju[from_qiTitle][yuan];
 		select_info.push('<p>' + this.ju + '</p>');
-		select_info.push('<p>' + this.futou + '</p>');
+		select_info.push('<p>符头：' + this.futou + '</p>');
 		
 		$('#select-info').html(select_info.join(''));
 		
-		this.dipan();
+		this.p_dipan();
 	},
 	
-	dipan: function(){
+	p_dipan: function(){
 		var arr = this.ju.split('');
-		var sn = arr[0]; // 顺逆
 		
 		var yiqi = ["戊", "己", "庚", "辛", "壬", "癸", "丁", "丙", "乙"];  // 六仪三奇
 		var j = parseInt(arr[1], 10);
@@ -193,7 +192,7 @@ var dun = {
 			$('#db' + i).html(i);
 		}
 		this.dipan_data = [];
-		if(sn == 'a'){
+		if(this.yy == 'a'){
 			for(var i = 0; i < 9; i ++){
 				$('#db' + j).append('<br />' + yiqi[i]);
 				this.dipan_data[j-1] = yiqi[i];
@@ -212,18 +211,19 @@ var dun = {
 				}
 			}			
 		}
-		console.log(this.dipan_data);
 		
-		this.tianpan();
+		this.p_tianpan();
 	},
 	
-	tianpan: function(){
+	p_tianpan: function(){
+		var gong = [1, 8, 3, 4, 9, 2, 7, 6];
 		var jiuxing = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
 		var liujia = ['甲子', '甲戌', '甲申', '甲午', '甲辰', '甲寅'];
 		var liuyi = ["戊", "己", "庚", "辛", "壬", "癸"];
+		var bameng = ['休', '生', '伤', '杜', '景', '死', '惊', '开'];
+		var bamengG = ['休', '死', '伤', '杜', '', '开', '惊', '生', '景'];
+		var bashengA = ['大值符', '腾蛇', '太阴', '六合', '白虎(勾陈)', '玄武(朱雀)', '九地', '九天'];
 		var xunshou = this.c_xunshou(this.data['bz_js']);
-		console.log(this.data['bz_js']);
-		console.log(xunshou);
 		
 		var i, j;
 		for(i = 0; i < 6; i ++){
@@ -231,14 +231,12 @@ var dun = {
 				break;
 			}
 		}
-		console.log(liuyi[i]);
 		for(j = 0; j < 9; j ++){
 			if(this.dipan_data[j] == liuyi[i]){
 				break;
 			}
 		}
-		zhifu = jiuxing[j];
-		console.log(zhifu);
+		var zhifu = jiuxing[j], zhishi = bamengG[j];
 		
 		var shi = this.data['bz_js'].split('')[0];
 		for(var m = 0; m < 9; m ++){
@@ -248,6 +246,7 @@ var dun = {
 		}
 		m ++;
 		console.log(m);
+		
 		for(var n = 0; n < 9; n ++){
 			$('#db' + m).append('<br />' + jiuxing[j]);
 			m ++;
@@ -259,11 +258,45 @@ var dun = {
 				j = 0;
 			}
 		}
+		
+		$('#db' + m).append('<br />' + bamengG[j]);
+		for(var n = 0; n < 8; n ++){
+			if(this.yy == 'a'){
+				
+			} else {
+				
+			}
+			
+		}
 	},
 	
 	c_xunshou: function(gz){
 		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"),
 			Zhi = new Array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
+		
+		var tarr = ['<br /><br />'];		
+		for(var o = 0, p = 0; o < 6; o ++){
+			for(var i = 0; i < 10; i ++){
+				if(i == 5){
+					tarr.push('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+				}
+				tarr.push(Gan[i] + '&nbsp;');
+			}
+			tarr.push('<br />');
+			
+			for(var j = 0; j < 10; j ++, p ++){
+				if( p == 12){
+					p = 0;
+				}
+				if(j == 5){
+					tarr.push('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+				}
+				tarr.push(Zhi[p] + '&nbsp;');
+			}
+			tarr.push('<br /><br />');
+		}
+		$('#jieqi').append(tarr.join(''));
+		
 		var arr = gz.split(''), i, j, l;
 		for(i = 0, l = Gan.length; i < l; i ++){
 			if( Gan[i] == arr[0] ){
@@ -295,7 +328,7 @@ var dun = {
 			}
 		}
 		var yuantou;
-		if(i > 5){
+		if(i >= 5){
 			i = i - 5;
 			yuantou = Zhi[(j - i < 0 ? j + 12 - i : j - i)];
 			this.futou = '己' + yuantou;
