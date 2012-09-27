@@ -1,0 +1,12 @@
+
+body{margin:0;padding:0;}
+a{color:#2B99E6;text-decoration:none;}
+a:hover{color:#5DB0E6;}
+h3{padding-top:20px;}
+#wapper{background:#FFF;font-size:14px;}
+#Container{margin:0 auto;padding:60px 0;width:1000px;background:#FFF;text-align:left;color:#333;}
+.mtable{margin:0 auto;width:720px;border-spacing:0;border-collapse:collapse;border:1px solid #CCC;}
+.mtable td{line-height:28px;text-align:center;border:1px solid #CCC;}
+.info{text-align:left;}
+.info h2{}
+.info p{line-height:28px;}
