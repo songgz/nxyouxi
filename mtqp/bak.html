@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>马踏棋盘</title>
+<style>
+*{margin:0;padding:0;}
+body{font-size:12px;margin:0;padding:0;}
+.container{margin:0 auto;margin-top:80px;width:800px;}
+.panel{float:left;width:400px;}
+table{margin:0 auto;border:0;background:#666;border-spacing:1px;border-collapse:separate;}
+td{width:60px;height:60px;text-align:center;background:#FFF;}
+
+.control{float:right;padding-top:80px;width:260px;}
+.btns{text-align:center;}
+.btns b{margin:0 10px;padding:8px 20px;border:1px solid #CCC;background:#EEE;cursor:pointer;}
+.ab{margin:40px 0;text-align:center;}
+
+.note{margin:60px auto;line-height:25px;}
+
+.div_clear{clear:both;}
+</style>
+
+<script>
+function $(v){return document.getElementById(v);}
+
+var timeDelay = 10
+	, height = 6
+	, width = 6
+	, values = []
+	, steps = [];
+	
+for(var i = 0; i < 36; i ++){
+	values[i] = 0;
+}
+for(var j = 0; j < 36; j ++){
+	steps[j] = 1;
+}
+
+var p = 1
+	, q = 2
+	, g = 1;
+
+function get(){
+	var i, j;
+	var _index = q * 6 + p;
+	var reArray = g_Next(p, q);
+	i = reArray[0];
+	j = reArray[1];
+	_step = reArray[2];
+	if(i != -1 && j != -1){
+		p = i;
+		q = j;
+		g += 1;
+		draw(p, q, g);		
+		steps[_index] = _step;
+		values[i * 6 + j] = g;
+	} else {
+		g = g - 1;
+		steps[_index] = 1;
+		draw_back(p, q, "i"+p+"j"+q);
+		for(var t = 0; t < 36; t ++){
+			if(values[t] == g){
+				p = t % 6;
+				q = t / 6 | 0;
+				_index = t;
+			}
+		}
+		//alert(i + "_" + j);
+		steps[_index] += 1;	
+	}
+	draw_value();
+	if(g == 35){
+		s_end();
+	}
+}
+
+function g_Next(i, j){
+	var _i, _j;
+	var _index = j * 6 + i;
+	var _step = steps[_index];
+	while(_step < 10){
+		switch(_step){
+			case 1:
+				_i = i - 2;
+				_j = j + 1;
+				break;
+			case 2:
+				_i = i - 1;
+				_j = j + 2;
+				break;
+			case 3:
+				_i = i + 1;
+				_j = j + 2;
+				break;
+			case 4:
+				_i = i + 2;
+				_j = j + 1;
+				break;
+			case 5:
+				_i = i + 2;
+				_j = j - 1;
+				break;
+			case 6:
+				_i = i + 1;
+				_j = j - 2;
+				break;
+			case 7:
+				_i = i - 1;
+				_j = j - 2;
+				break;
+			case 8:
+				_i = i - 2;
+				_j = j - 1;
+				break;
+			default:
+				_i = -1;
+				_j = -1;
+				break;
+		}
+		if(_i>=0 && _j>=0 && _i<6 && _j<6 && values[_j * 6 + _i] == 0){
+			break;
+		}
+		_step += 1;
+	}
+	return [_i, _j, _step];
+}
+function g_Back(i, j){
+	if(g==36){
+		s_end();
+	}
+}
+
+
+function s_begin(){
+	get();
+	//timeID = setInterval('get()', timeDelay); 
+}
+function s_end(){
+	clearInterval(timeID); 
+}
+
+
+function initGraph(){
+	var arr = ['<table>'];
+	for(var j = 0; j < height; j ++){
+		arr.push('<tr>');
+		for(var i = 0; i < width; i ++){
+			arr.push('<td id="i' + i + 'j' + j + '">i' + i + 'j' + j +'</td>');
+		}
+		arr.push('</tr>');
+	}
+	arr.push('</table>');
+	$('panel').innerHTML = arr.join('');
+}
+
+function draw(i, j, v){
+	var _target = $("i"+i+"j"+j);
+	_target.innerHTML = v;
+	_target.style.background = '#EEE';
+	values[j * 6 + i] = v;
+}
+
+function draw_back(i, j, v){
+	var _target = $("i"+i+"j"+j);
+	_target.innerHTML = v;
+	_target.style.background = '#FFF';
+	values[j * 6 + i] = 0;
+}
+
+function draw_value(){
+	var arr = [];
+	for(var t = 0; t < 36; t ++){
+		arr.push(values[t] + '\t');
+		if((t + 1) % 6 == 0){
+			arr.push('<br />');
+		}
+	}
+	arr.push('<br /<br />');
+	for(var t = 0; t < 36; t ++){
+		arr.push(steps[t] + '\t');
+		if((t + 1) % 6 == 0){
+			arr.push('<br />');
+		}
+	}
+	$('ab').innerHTML = arr.join('');
+}
+function draw_start(i, j){
+	for(var t = 0; t < height; t ++){
+		for(var m = 0; m < width; m ++){
+			draw_back(m, t, "i"+m+"j"+t);
+		}
+	}
+	draw(i, j, 1);
+}
+window.onload = function(){
+	initGraph();
+	draw_value();
+	draw(p, q, g);
+			
+	$('btn_begin').onclick = function(){
+		s_begin();
+	}
+	
+	$('btn_end').onclick = function(){
+		s_end();
+	}
+}
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="panel" id="panel">
+	</div>
+	<div class="control">
+		<div class="btns">
+			<b id="btn_begin">开始</b>
+			<b id="btn_end">停止</b>
+		</div>
+		<div class="ab" id="ab"></div>
+	</div>
+	<div class="div_clear"></div>
+	<div class="note">
+		<p style="font-weight:bold;">马踏棋盘-说明：</p>
+		<p>1、点击棋盘上任意一点作为起始。<br />点击“开始”开始走步，点击“停止”停止走步。<br />走完整个棋盘停止。</p>
+		<p>2、纪录：“15”移动一种变化大概为20分钟</p>
+		<p>3、程序性能应该没多大问题，只是时间太长（我怕一下把机器搞死）。有更好的解决请联系我（395693519#qq.com）</p>
+	</div>
+</div>
+</body>
+</html>

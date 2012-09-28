@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>马踏棋盘</title>
+<style>
+*{margin:0;padding:0;}
+body{font-size:12px;margin:0;padding:0;}
+.container{margin:0 auto;margin-top:80px;width:800px;}
+.panel{float:left;width:400px;}
+table{margin:0 auto;border:0;background:#666;border-spacing:1px;border-collapse:separate;}
+td{width:60px;height:60px;text-align:center;background:#FFF;}
+
+.control{float:right;padding-top:80px;width:260px;}
+.btns{margin:0 auto;width:120px;height:30px;line-height:30px;text-align:center;border:1px solid #CCC;background:#EEE;cursor:pointer;}
+.ab{margin:40px 0;text-align:center;}
+
+.note{margin:60px auto;line-height:25px;}
+.debug{position:absolute;top:0;left:0;border:1px solid;line-height:22px;}
+
+.div_clear{clear:both;}
+</style>
+
+<script>
+function $(v){return document.getElementById(v);}
+
+function Node(i, j, v, step){
+	this.i = i;
+	this.j = j;
+	this.v = v;
+	this.step = step;
+	this.prev = null;
+}
+
+Node.prototype.next = function(){
+	var _i, _j
+		, _step = this.step;
+		
+	//var arr_info = [];
+	
+	while(_step < 10){
+		switch(_step){
+			case 1:
+				// 左下靠左
+				_i = this.i - 2;
+				_j = this.j + 1;
+				break;
+			case 2:
+				// 左下靠右
+				_i = this.i - 1;
+				_j = this.j + 2;
+				break;
+			case 3:
+				_i = this.i + 1;
+				_j = this.j + 2;
+				break;
+			case 4:
+				_i = this.i + 2;
+				_j = this.j + 1;
+				break;
+			case 5:
+				_i = this.i + 2;
+				_j = this.j - 1;
+				break;
+			case 6:
+				_i = this.i + 1;
+				_j = this.j - 2;
+				break;
+			case 7:
+				_i = this.i - 1;
+				_j = this.j - 2;
+				break;
+			case 8:
+				_i = this.i - 2;
+				_j = this.j - 1;
+				break;
+			default:
+				_i = -1;
+				_j = -1;
+				break;
+		}
+		//arr_info.push(_step);
+		
+		if(_i >= 0 && _j >= 0 && _i < 6 && _j < 6 && mtqp.find(_i, _j).v == 0){
+			break;
+		}
+		_step += 1;
+	}
+	//console.log(arr_info.join(','));
+	return [_i, _j, _step];
+}
+
+Node.prototype.to_s = function(){
+	return this.i + '_' + this.j + ' : ' + this.v + ' ' + this.step;
+}
+
+var mtqp = {
+	init: function(){
+		this.beginTime = new Date();
+		
+		this.nodes = [];	
+		this.n = null;
+		this.g = 1;
+		
+		this._initGraph();
+		this._draw_value();
+		
+		this.n = this.nodes[2 * 6 + 1];
+		this.n.v = this.g;
+		this._draw();
+		
+		var self = this;
+		$('Btn').onclick = function(){
+			if(self.running){
+				self.running = false;
+				this.innerHTML = '开始';
+				self._end();
+			} else {
+				self.running = true;
+				this.innerHTML = '停止';
+				self._go();
+			}
+		}
+	},
+	
+	find: function(i, j){
+		for(var t = 0, item; item = this.nodes[t]; t ++){
+			if(item.i == i && item.j == j){
+				return item;
+			}
+		}
+		return {'v': -1};
+	},
+	
+	_initGraph: function(){
+		var arr = ['<table>'];
+		for(var j = 0; j < 6; j ++){
+			arr.push('<tr>');
+			for(var i = 0; i < 6; i ++){
+				arr.push('<td id="i' + i + 'j' + j + '">i' + i + 'j' + j +'</td>');
+				this.nodes.push(new Node(i, j, 0, 1));
+			}
+			arr.push('</tr>');
+		}
+		arr.push('</table>');
+		$('panel').innerHTML = arr.join('');
+	},
+	
+	_go: function(){
+		//this._get();
+		var self = this;
+		this.timeID = setInterval(function(){self._get()}, 10); 
+	},
+	
+	_end: function(){
+		clearInterval(this.timeID);
+		var chashi = (new Date()).getTime() - this.beginTime;
+		var min = parseInt(chashi / (1000 * 60), 10);
+		if(min > 0){
+			var sec = ( chashi - 1000 * 60 * min ) / 1000;
+			$('debug').innerHTML = '用时:' + min + '分' + sec + '秒';
+		} else {
+			$('debug').innerHTML = '用时:' + chashi / (1000 * 60) + '分';
+		}
+	},
+	
+	_draw_value: function(){
+		var arr = [];
+		for(var t = 0; t < 36; t ++){
+			arr.push(this.nodes[t].v + '\t');
+			if((t + 1) % 6 == 0){
+				arr.push('<br />');
+			}
+		}
+		arr.push('<br /<br />');
+		for(var t = 0; t < 36; t ++){
+			arr.push(this.nodes[t].step + '\t');
+			if((t + 1) % 6 == 0){
+				arr.push('<br />');
+			}
+		}
+		$('ab').innerHTML = arr.join('');
+	},
+	
+	_draw: function(){
+		var _target = $('i' + this.n.i + 'j' + this.n.j);
+		_target.innerHTML = this.g;
+		_target.style.background = '#EEE';		
+	},
+	
+	_draw_back: function(){
+		var _target = $('i' + this.n.i + 'j' + this.n.j);
+		_target.innerHTML = _target.id;
+		_target.style.background = '#FFF';
+	},
+	
+	_get: function(){
+		var reArray = this.n.next()
+			, i = reArray[0]
+			, j = reArray[1]
+			, _step = reArray[2];
+		
+		if(i != -1 && j != -1){
+			this.g += 1;
+			
+			this.n.step = _step;
+			
+			var t = this.n;
+			this.n = this.find(i, j);
+			this.n.prev = t;
+			this.n.v = this.g;
+			
+			this._draw();
+		} else {
+			this.g -= 1;
+			this._draw_back();
+			this.n.v = 0;
+			this.n.step = 1;
+			
+			this.n = this.n.prev;
+			this.n.step += 1;
+		}
+		this._show_debug();
+		
+		this._draw_value();
+		if(this.g == 36){
+			this._end();
+		}
+		if(this.g == 0){
+			console.log('======================0');
+			this.end();
+		}
+	},
+	
+	_show_debug: function(){
+		var arr = [this.n.to_s()];
+		var p = this.n.prev;
+		while(p != null){
+			arr.push(p.to_s());
+			p = p.prev;
+		}
+		$('debug').innerHTML = arr.join('<br />');
+	}
+};
+
+window.onload = function(){
+	mtqp.init();
+}
+</script>
+</head>
+<body>
+<div id="debug" class="debug">	
+</div>
+<div class="container">
+	<div class="panel" id="panel">
+	</div>
+	<div class="control">
+		<div class="btns" id="Btn">开始</div>
+		<div class="ab" id="ab"></div>
+	</div>
+	<div class="div_clear"></div>
+	<div class="note">
+		<p style="font-weight:bold;">马踏棋盘-说明：</p>
+		<p>1、点击“开始”开始走步，点击“停止”停止走步。<br />走完整个棋盘停止。</p>
+		<p>2、有更好的解决请联系我（395693519#qq.com）</p>
+	</div>
+</div>
+</body>
+</html>
