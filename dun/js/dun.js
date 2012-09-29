@@ -185,29 +185,94 @@ var dun = {
 	p_dipan: function(){
 		var arr = this.ju.split('');
 		
-		var yiqi = ["戊", "己", "庚", "辛", "壬", "癸", "丁", "丙", "乙"];  // 六仪三奇
-		var j = parseInt(arr[1], 10);
+		var qiyi = ["戊", "己", "庚", "辛", "壬", "癸", "丁", "丙", "乙"];  // 三奇六仪
+		var ju = parseInt(arr[1], 10);
 		
 		for(var i = 1; i <= 9; i ++){
 			$('#db' + i).html(i);
 		}
 		this.dipan_data = [];
+		this.pan = [
+			{
+				'key': '1',
+				'qiyi': '',
+				'jiuxing': '天蓬',
+				'bameng': '休'
+			},
+			{
+				'key': '8',
+				'qiyi': '',
+				'jiuxing': '天任',
+				'bameng': '生'
+			},
+			{
+				'key': '3',
+				'qiyi': '',
+				'jiuxing': '天冲',
+				'bameng': '伤'				
+			},
+			{
+				'key': '4',
+				'qiyi': '',
+				'jiuxing': '天辅',
+				'bameng': '杜'			
+			},
+			{
+				'key': '9',
+				'qiyi': '',
+				'jiuxing': '天英',
+				'bameng': '景'
+			},
+			{
+				'key': '2',
+				'qiyi': '',
+				'jiuxing': '天芮',
+				'bameng': '死'
+			},
+			{
+				'key': '7',
+				'qiyi': '',
+				'jiuxing': '天柱',
+				'bameng': '惊'
+			},
+			{
+				'key': '6',
+				'qiyi': '',
+				'jiuxing': '天心',
+				'bameng': '开'			
+			},
+			{
+				'key': '5',
+				'qiyi': '',
+				'jiuxing': '天禽'
+			}
+		];
+		
+		var arr_ys = [];
+		for(var j = 0; j < 9; j ++){
+			for(var i = 0, item; item = this.pan[i]; i ++){
+				if(item.key == j + 1){
+					arr_ys.push(i);
+				}
+			}
+		}
+		
 		if(this.yy == 'a'){
 			for(var i = 0; i < 9; i ++){
-				$('#db' + j).append('<br />' + yiqi[i]);
-				this.dipan_data[j-1] = yiqi[i];
-				j ++;
-				if(j >= 10){
-					j = 1;					
+				$('#db' + ju).append('<br />' + qiyi[i]);
+				this.pan[arr_ys[ju-1] - 1]['qiyi'] = qiyi[i];
+				ju ++;
+				if(ju >= 10){
+					ju = 1;					
 				}
 			}
 		} else {
 			for(var i = 0; i < 9; i ++){
-				$('#db' + j).append('<br />' + yiqi[i]);
-				this.dipan_data[j-1] = yiqi[i];
-				j --;
-				if(j <= 0){
-					j = 9;
+				$('#db' + ju).append('<br />' + qiyi[i]);
+				this.pan[arr_ys[ju-1]]['qiyi'] = qiyi[i];
+				ju --;
+				if(ju <= 0){
+					ju = 9;
 				}
 			}			
 		}
@@ -223,7 +288,8 @@ var dun = {
 		var bameng = ['休', '生', '伤', '杜', '景', '死', '惊', '开'];
 		var bamengG = ['休', '死', '伤', '杜', '', '开', '惊', '生', '景'];
 		var bashengA = ['大值符', '腾蛇', '太阴', '六合', '白虎(勾陈)', '玄武(朱雀)', '九地', '九天'];
-		var xunshou = this.c_xunshou(this.data['bz_js']);
+		
+		var xunshou = this.c_xunshou(this.data['bz_js']);		
 		
 		var i, j;
 		for(i = 0; i < 6; i ++){
