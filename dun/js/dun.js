@@ -251,7 +251,13 @@ var dun = {
 		var bamengG = ['休', '死', '伤', '杜', '', '开', '惊', '生', '景'];
 		var qiyiG = ['戊', '己', '丁', '乙', '壬', '辛', '丙', '癸'];
 		
-		var jiuxing = ['天蓬', '天任', '天冲', '天辅', '天英', '天芮(天禽)', '天柱', '天心'];
+		var jiuxing = ['天蓬', '天任', '天冲', '天辅', '天英', '天芮', '天柱', '天心', '天禽'];
+		
+		for(var s = 0; s < 9; s ++){
+			jiuxing[s] = jiuxing[s] + '-' + this.pan[s].qiyi;
+		}
+		jiuxing[5] = jiuxing[5] + '(' + jiuxing[8] + ')';		
+		
 		var bameng = ['休', '生', '伤', '杜', '景', '死', '惊', '开'];
 		
 		var liujia = ['甲子', '甲戌', '甲申', '甲午', '甲辰', '甲寅'];
@@ -276,7 +282,6 @@ var dun = {
 				break;
 			}
 		}
-		console.log(liuyi[i]);
 		var zhifu = jiuxingG[this.pan[j].gong-1], zhishi = bamengG[this.pan[j].gong-1];
 		if(this.pan[j].gong == 5){
 			zhishi = bamengG[1];
@@ -289,18 +294,6 @@ var dun = {
 		
 		var index = 0;
 		if(shi == '甲'){
-			// for(var z = 0; z < 6; z ++){
-				// if(this.data['bz_js'] == liujia[z]){
-					// break;
-				// }
-			// }
-			// for(var m = 0; m < 9; m ++){
-				// if(this.pan[m].qiyi == liuyi[z]){
-					// index = this.pan[m].gong;
-					// break;
-				// }
-			// }
-			// console.log(this.pan[j].gong);
 			m = j;
 		} else { 
 			for(var m = 0; m < 9; m ++){
@@ -310,7 +303,6 @@ var dun = {
 				}
 			}
 		}		
-		console.log('index', index);
 		
 		for(var p = 0; p < 9; p ++){
 			if(jiuxing[p].indexOf(zhifu) >= 0){
@@ -336,65 +328,6 @@ var dun = {
 			tgong = tgong.next;
 			if(p >= 8){
 				p = 0;
-			}
-		}
-		
-		for(var nn = 0; nn < 9; nn ++){
-			if(qiyi[nn] == liuyi[i]){
-				break;
-			}
-		}
-		
-		tgong = this.pan[m];
-		if(this.yy == 'a'){
-			console.log('nn', nn);
-			for(var n = 0; n < 9; n ++){
-				var igong = parseInt(tgong.gong, 10);
-				if(igong != 5){
-					$('#db' + igong).replace(tgong.jiuxing, tgong.jiuxing + '-' + qiyi[nn]);
-					//$('#db' + tgong.gong).append('-' + qiyi[nn]);										
-				}
-				tgong.jiuxing = tgong.jiuxing + '-' + qiyi[nn];
-				nn ++;
-				if(igong == 9){
-					while(parseInt(tgong.gong, 10) != 1){
-						tgong = tgong.next;
-					}
-				} else {
-					while(parseInt(tgong.gong, 10) != igong + 1){
-						tgong = tgong.next;
-					}
-				}		
-				if(nn >= 8){
-					nn = 0;
-				}
-			}
-		} else{
-			for(var n = 0; n < 9; n ++){
-				var igong = parseInt(tgong.gong, 10);
-				if(igong != 5){
-					$('#db' + tgong.gong).append('-' + qiyi[nn]);
-					tgong.jiuxing = tgong.jiuxing + '-' + qiyi[nn];					
-				}
-				nn ++;
-				if(igong == 1){
-					while(parseInt(tgong.gong, 10) != 9){
-						tgong = tgong.next;
-						if(tgong.gong == igong){
-							break;
-						}
-					}
-				} else {
-					while(parseInt(tgong.gong, 10) != igong - 1){
-						tgong = tgong.next;
-						if(tgong.gong == igong){
-							break;
-						}
-					}
-				}		
-				if(nn >= 8){
-					nn = 0;
-				}
 			}
 		}
 		
@@ -432,7 +365,6 @@ var dun = {
 				tgong = tgong.next;
 			}
 		}
-		console.log(jj);
 		
 		for(var n = 0; n < 9; n ++){
 			if(this.pan[n].gong == jj){
