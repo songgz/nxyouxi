@@ -10,6 +10,14 @@ Date.prototype.to_s = function(){
 	return this.getFullYear() + '-' + month + '-' + day + ' ' + this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds(); 
 };
 
+var G = function(){
+	this.gong = 0;
+	this.qiyi = '';
+	this.jiuxing = '';
+	this.bameng = '';
+	this.next = '';
+};
+
 var dun = {
 	init: function(){
 		this.jieqi = [];
@@ -191,76 +199,19 @@ var dun = {
 		for(var i = 1; i <= 9; i ++){
 			$('#db' + i).html(i);
 		}
-		this.dipan_data = [];
-		this.pan = [
-			{
-				'key': '1',
-				'qiyi': '',
-				'jiuxing': '天蓬',
-				'bameng': '休'
-			},
-			{
-				'key': '8',
-				'qiyi': '',
-				'jiuxing': '天任',
-				'bameng': '生'
-			},
-			{
-				'key': '3',
-				'qiyi': '',
-				'jiuxing': '天冲',
-				'bameng': '伤'				
-			},
-			{
-				'key': '4',
-				'qiyi': '',
-				'jiuxing': '天辅',
-				'bameng': '杜'			
-			},
-			{
-				'key': '9',
-				'qiyi': '',
-				'jiuxing': '天英',
-				'bameng': '景'
-			},
-			{
-				'key': '2',
-				'qiyi': '',
-				'jiuxing': '天芮',
-				'bameng': '死'
-			},
-			{
-				'key': '7',
-				'qiyi': '',
-				'jiuxing': '天柱',
-				'bameng': '惊'
-			},
-			{
-				'key': '6',
-				'qiyi': '',
-				'jiuxing': '天心',
-				'bameng': '开'			
-			},
-			{
-				'key': '5',
-				'qiyi': '',
-				'jiuxing': '天禽'
-			}
-		];
-		
-		var arr_ys = [];
-		for(var j = 0; j < 9; j ++){
-			for(var i = 0, item; item = this.pan[i]; i ++){
-				if(item.key == j + 1){
-					arr_ys.push(i);
-				}
-			}
-		}
-		
+		var arr_ys = [1, 8, 3, 4, 9, 2, 7, 6, 5];
+		this.pan = [];
 		if(this.yy == 'a'){
 			for(var i = 0; i < 9; i ++){
 				$('#db' + ju).append('<br />' + qiyi[i]);
-				this.pan[arr_ys[ju-1] - 1]['qiyi'] = qiyi[i];
+				var g = new G();
+				g.gong = ju;
+				g.qiyi = qiyi[i];
+				for(var j = 0;j < 9; j ++){
+					if(arr_ys[j] == ju){						
+						this.pan[j] = g;
+					}
+				}
 				ju ++;
 				if(ju >= 10){
 					ju = 1;					
@@ -269,7 +220,14 @@ var dun = {
 		} else {
 			for(var i = 0; i < 9; i ++){
 				$('#db' + ju).append('<br />' + qiyi[i]);
-				this.pan[arr_ys[ju-1]]['qiyi'] = qiyi[i];
+				var g = new G();
+				g.gong = ju;
+				g.qiyi = qiyi[i];
+				for(var j = 0;j < 9; j ++){
+					if(arr_ys[j] == ju){						
+						this.pan[j] = g;
+					}
+				}
 				ju --;
 				if(ju <= 0){
 					ju = 9;
@@ -277,19 +235,34 @@ var dun = {
 			}			
 		}
 		
+		for(var j = 0; j < 8; j ++){
+			this.pan[j].next = this.pan[j + 1];
+		}
+		this.pan[8].next = this.pan[0];
+		console.log(this.pan);
+		
 		this.p_tianpan();
 	},
 	
 	p_tianpan: function(){
 		var gong = [1, 8, 3, 4, 9, 2, 7, 6];
-		var jiuxing = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
-		var liujia = ['甲子', '甲戌', '甲申', '甲午', '甲辰', '甲寅'];
-		var liuyi = ["戊", "己", "庚", "辛", "壬", "癸"];
-		var bameng = ['休', '生', '伤', '杜', '景', '死', '惊', '开'];
+		//var jiuxing = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
+		var jiuxingG = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
 		var bamengG = ['休', '死', '伤', '杜', '', '开', '惊', '生', '景'];
-		var bashengA = ['大值符', '腾蛇', '太阴', '六合', '白虎(勾陈)', '玄武(朱雀)', '九地', '九天'];
+		var qiyiG = ['戊', '己', '丁', '乙', '壬', '辛', '丙', '癸'];
 		
-		var xunshou = this.c_xunshou(this.data['bz_js']);		
+		var jiuxing = ['天蓬', '天任', '天冲', '天辅', '天英', '天芮(天禽)', '天柱', '天心'];
+		var bameng = ['休', '生', '伤', '杜', '景', '死', '惊', '开'];
+		
+		var liujia = ['甲子', '甲戌', '甲申', '甲午', '甲辰', '甲寅'];
+		var liuyi = ["戊", "己", "庚", "辛", "壬", "癸"];		
+		
+		var basheng = ['值符', '腾蛇', '太阴', '六合', '白虎(勾陈)', '玄武(朱雀)', '九地', '九天'];
+		var bashengA = ['值符', '腾蛇', '太阴', '六合', '白虎(勾陈)', '玄武(朱雀)', '九地', '九天'];
+		var bashengB = ['值符', '九天', '九地', '玄武(朱雀)', '白虎(勾陈)', '六合', '太阴', '腾蛇'];
+		
+		var xunshou = this.c_xunshou(this.data['bz_js']);
+		console.log('xunshou', xunshou);		
 		
 		var i, j;
 		for(i = 0; i < 6; i ++){
@@ -298,41 +271,161 @@ var dun = {
 			}
 		}
 		for(j = 0; j < 9; j ++){
-			if(this.dipan_data[j] == liuyi[i]){
+			if(this.pan[j].qiyi == liuyi[i]){
 				break;
 			}
 		}
-		var zhifu = jiuxing[j], zhishi = bamengG[j];
+		console.log(liuyi[i]);
+		var zhifu = jiuxingG[this.pan[j].gong-1], zhishi = bamengG[this.pan[j].gong-1];
+		if(this.pan[j].gong == 5){
+			zhishi = bamengG[1];
+		}
+		
+		console.log('zhifu', zhifu);
+		console.log('zhishi', zhishi);
 		
 		var shi = this.data['bz_js'].split('')[0];
+		
+		// todo 甲
+		var index = 0;
 		for(var m = 0; m < 9; m ++){
-			if(this.dipan_data[m] == shi){
+			if(this.pan[m].qiyi == shi){
+				index = this.pan[m].gong;
 				break;
 			}
 		}
-		m ++;
-		console.log(m);
+		console.log('index', index);
 		
-		for(var n = 0; n < 9; n ++){
-			$('#db' + m).append('<br />' + jiuxing[j]);
-			m ++;
-			j ++;
-			if(m > 9){
-				m = 1;
+		for(var p = 0; p < 9; p ++){
+			if(jiuxing[p].indexOf(zhifu) >= 0){
+				break;
 			}
-			if(j > 8){
-				j = 0;
+		}
+		for(var q = 0; q < 9; q ++){
+			if(bameng[q] == zhishi){
+				break;
 			}
 		}
 		
-		$('#db' + m).append('<br />' + bamengG[j]);
-		for(var n = 0; n < 8; n ++){
-			if(this.yy == 'a'){
-				
-			} else {
-				
+		// 星
+		var tgong = this.pan[m];
+		for(var n = 0; n < 9; n ++){
+			if(tgong.gong != 5){
+				$('#db' + tgong.gong).append('<br />' + jiuxing[p]);
+				tgong.jiuxing = jiuxing[p];
+				p ++;
 			}
-			
+			tgong = tgong.next;
+			if(p >= 8){
+				p = 0;
+			}
+		}
+		
+		for(var nn = 0; nn < 9; nn ++){
+			if(qiyiG[nn] == liuyi[i]){
+				break;
+			}
+		}
+		tgong = this.pan[m];
+		if(this.yy == 'a'){
+			for(var n = 0; n < 9; n ++){
+				if(tgong.gong != 5){
+					$('#db' + tgong.gong).append('-' + qiyiG[nn]);
+					tgong.jiuxing = tgong.jiuxing + '-' + qiyiG[nn];
+					nn ++;
+				}
+				tgong = tgong.next;
+				if(nn >= 8){
+					nn = 0;
+				}
+			}
+		} else{
+			for(var n = 0; n < 9; n ++){
+				if(tgong.gong != 5){
+					$('#db' + tgong.gong).append('-' + qiyiG[nn]);
+					tgong.jiuxing = tgong.jiuxing + '-' + qiyiG[nn];
+					nn --;
+				}
+				tgong = tgong.next;
+				if(nn <= 0){
+					nn = 8;
+				}
+			}
+		}
+		
+		// meng
+		var Gan = new Array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸");
+		var jj = this.pan[j].gong;
+		if(this.yy == 'a'){
+			for(var ii = 0; ii < 12; ii ++){
+				if(Gan[ii] == shi){
+					break;
+				}
+				jj ++;
+				if(jj == 10){
+					jj = 1;
+				}
+			}
+		} else{
+			for(var ii = 0; ii < 12; ii ++){
+				if(Gan[ii] == shi){
+					break;
+				}
+				jj --;
+				if(jj == 0){
+					jj = 9;
+				}
+			}
+		}
+		if(jj == 5){
+			tgong = this.pan[m];
+			for(var n = 0; n < 9; n ++){
+				if(tgong.jiuxing != jiuxing[5]){
+					jj = tgong.gong;
+					break;
+				}
+				tgong = tgong.next;
+			}
+		}
+		console.log(jj);
+		
+		for(var n = 0; n < 9; n ++){
+			if(this.pan[n].gong == jj){
+				tgong = this.pan[n];
+				break;
+			}			
+		}
+		
+		for(var n = 0; n < 9; n ++){
+			if(tgong.gong != 5){
+				$('#db' + tgong.gong).append('<br />' + bameng[q]);
+				q ++;
+				if(q >= 8){
+					q = 0;
+				}
+			}
+			tgong = tgong.next;
+		}
+		
+		
+		// sheng
+		tgong = this.pan[m];
+		if(this.yy == 'a'){
+			for(var n = 0; n < 8;){
+				if(tgong.gong != 5){
+					$('#db' + tgong.gong).append('<br />' + bashengA[n]);
+					n ++;
+				}
+				tgong = tgong.next;
+			}
+		} else {			
+			for(var n = 0; n < 8;){
+				if(tgong.gong != 5){
+					$('#db' + tgong.gong).append('<br />' + bashengB[n]);
+					n ++;
+				}
+				tgong = tgong.next;
+			}
 		}
 	},
 	
