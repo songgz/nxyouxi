@@ -6,28 +6,51 @@ file = File.open("index2.html", "rb")
 
 arr = file.read.to_s.force_encoding('UTF-8').split(/第(\S{1,3})回/)
 
-contentArr = []
+
 
 pageArr = []
 
 
 i = 1
-for t in arr
+title = ''
+a = ''
+for t in arr  
   if i % 2 == 0    
     pageArr = []
-    pageArr << '<h2>第' + t + '回</h2>'
+    pageArr << '<h2>第' + t + '回 '
+    title = '第' + t + '回 '
+    a = t
   else
-    for m in t.split('\n')
-      pageArr << '<p>' + m + '</p>'
+    tArr = t.split(' ')
+    j = 0
+    for m in tArr
+      if j == 0
+        title += m
+        pageArr << m + '</h2>'
+      else
+        pageArr << '<p>' + m + '</p>'
+      end
+      j += 1
     end
-    pageArr << '\n'
-    puts pageArr.join('')
+    
+    contentArr = []
+    contentArr << '<!DOCTYPE html public "-//W3C//DTD HTML 4.0 Transitional//EN">'
+    contentArr << '<html>'
+    contentArr << '<head>'
+    contentArr << '  <meta http-equiv="content-type" content="text/html; charset=utf-8">'
+    contentArr << '  <title>' + title + ' - 八仙得道（清）无垢道人著</title>'
+    contentArr << '  <style>p{line-height:22px;}</style>' 
+    contentArr << '</head>'
+    contentArr << '<body>'
+    contentArr << pageArr.join('')
+    contentArr << '</body>'
+    contentArr << '</html>'
+    
+    new_file = File.open("files/" + a.to_s + ".html", "w+")
+    new_file.write contentArr.join('')
+    new_file.close
   end
   i += 1
-    
-  if t.to_i > 4
-    break
-  end
 end
 # 
     # s += '<!DOCTYPE html public "-//W3C//DTD HTML 4.0 Transitional//EN">'
