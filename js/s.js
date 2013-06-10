@@ -38,12 +38,16 @@ $(document).ready(function(){
 
 function loadready(){
 	var w = $(window).width();
-	if(w > 1490){
-		$('#Container').css('width', '1480px');
-	} else if(w > 1222){
-		$('#Container').css('width', '1222px');
+	if(w > 1320){
+		$('#Container').css('width', '1320px');
+	} else if(w > 1060){
+		$('#Container').css('width', '1060px');
+	} else if(w > 800){
+		$('#Container').css('width', '800px');
+	} else if(w > 540){
+		$('#Container').css('width', '540px');
 	} else {
-		$('#Container').css('width', '960px');
+		$('#Container').css('width', '280px');
 	}
 }
 
